@@ -14,17 +14,16 @@
 #  limitations under the License.
 #
 class openshift_origin::broker {
-  ensure_resource('package', [
+  package { [
       'openshift-origin-broker',
       'openshift-origin-broker-util',
       'rubygem-openshift-origin-msg-broker-mcollective',
       'rubygem-openshift-origin-admin-console',      
       "rubygem-openshift-origin-dns-${::openshift_origin::broker_dns_plugin}",
-    ], {
-      ensure  => present,
-      require => Class['openshift_origin::install_method'],
-    }
-  )
+    ]:
+    ensure  => present,
+    require => Class['openshift_origin::install_method'],
+  }
 
   include openshift_origin::plugins::frontend::apache
   
@@ -142,6 +141,7 @@ class openshift_origin::broker {
     owner     => 'apache',
     group     => 'apache',
     mode      => '0644',
+    seluser   => 'system_u',
     subscribe => Exec ['Broker gem dependencies'],
     require   => Exec ['Broker gem dependencies'],
   }

@@ -23,13 +23,15 @@ define firewall( $service=undef, $port=undef, $protocol=undef ) {
   if $operatingsystem == 'Fedora' {
     ensure_resource('package', 'iptables-services', {})
   }
-  
-  ensure_resource( 'exec', 'Create IPTables rhc-app-comm chain for port proxying', {
-      command  => template('openshift_origin/node/node_iptables.erb'),
-      require  => Package[$::openshift_origin::params::iptables_requires],
-      provider => 'shell'
-    }
-  )
+ 
+  if member( $::openshift_origin::roles, 'node' )  {
+    ensure_resource( 'exec', 'Create IPTables rhc-app-comm chain for port proxying', {
+        command  => template('openshift_origin/node/node_iptables.erb'),
+        require  => Package[$::openshift_origin::params::iptables_requires],
+        provider => 'shell'
+      }
+    )
+  }
   
   $lokkit = $::operatingsystem ? {
     'Fedora' => '/usr/sbin/lokkit',

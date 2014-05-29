@@ -60,6 +60,7 @@ class openshift_origin::console {
     owner     => 'apache',
     group     => 'apache',
     mode      => '0644',
+    seluser   => 'system_u',
     require   => Package['openshift-origin-console'],
   }
 

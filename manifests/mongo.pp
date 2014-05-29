@@ -14,11 +14,10 @@
 #  limitations under the License.
 #
 class openshift_origin::mongo {
-  ensure_resource('package', ['mongodb', 'mongodb-server'], {
-      ensure  => present,
-      require => Class['openshift_origin::install_method'],
-    }
-  )
+  package { ['mongodb', 'mongodb-server']:
+    ensure  => present,
+    require => Class['openshift_origin::install_method'],
+  }
 
   file { 'mongo setup script':
     ensure  => present,
