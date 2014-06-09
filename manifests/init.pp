@@ -496,6 +496,7 @@ class openshift_origin (
   $datastore_hostname                   = "mongodb.${domain}",
   $named_ip_addr                        = $ipaddress,
   $bind_key                             = '',
+  $bind_key_algorithm                   = 'HMAC-MD5',
   $bind_krb_keytab                      = '',
   $bind_krb_principal                   = '',
   $aws_access_key_id                    = '',
