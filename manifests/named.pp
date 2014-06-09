@@ -27,6 +27,7 @@ class openshift_origin::named {
     owner   => 'named',
     group   => 'named',
     mode    => '0644',
+    replace => 'false',
     require => File['/var/named/dynamic'],
   }
 
